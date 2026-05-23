@@ -1,3 +1,4 @@
+import AdminShell from "@/components/admin/AdminShell";
 import { createConsignmentAction } from "@/lib/backoffice/actions";
 import { selectRows } from "@/lib/backoffice/supabase-rest";
 import type { AppUser, Partner, Product } from "@/lib/backoffice/types";
@@ -11,7 +12,8 @@ export default async function NewConsignmentPage() {
     selectRows<AppUser>("pa_app_users", { select: "id,full_name,email,role,commission_rate,active", active: "eq.true", role: "eq.vendedor" }),
   ]);
   return (
-    <div className="space-y-8">
+    <AdminShell>
+      <div className="space-y-8">
       <div><h1 className="text-4xl font-semibold">Nueva consignación</h1><p className="mt-2 text-neutral-600">Entrega productos a un pet shop, corralón, vivero o comercio aliado. El sistema calculará vendido, comisión y rendición.</p></div>
       <form action={createConsignmentAction} className="space-y-6 rounded-[1.5rem] border border-emerald-900/10 bg-white p-5 shadow-sm">
         <div className="grid gap-4 md:grid-cols-3">
@@ -44,6 +46,7 @@ export default async function NewConsignmentPage() {
         </label>
         <button className="rounded-full bg-emerald-900 px-6 py-3 text-sm font-semibold text-white">Crear y registrar entrega</button>
       </form>
-    </div>
+      </div>
+    </AdminShell>
   );
 }

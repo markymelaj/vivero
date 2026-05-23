@@ -1,3 +1,4 @@
+import AdminShell from "@/components/admin/AdminShell";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { registerConsignmentAdjustmentAction, registerConsignmentPaymentAction, registerConsignmentSaleAction } from "@/lib/backoffice/actions";
@@ -18,7 +19,8 @@ export default async function ConsignmentDetailPage({ params }: { params: { id: 
   const portalPath = `/portal/${summary.portal_token}`;
 
   return (
-    <div className="space-y-8">
+    <AdminShell>
+      <div className="space-y-8">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <Link href="/admin/consignaciones" className="text-sm text-emerald-800 underline">← Volver</Link>
@@ -87,7 +89,8 @@ export default async function ConsignmentDetailPage({ params }: { params: { id: 
           <input name="notes" placeholder="Observación" className="rounded-2xl border border-neutral-200 px-3 py-3 md:col-span-5" />
         </form>
       </section>
-    </div>
+      </div>
+    </AdminShell>
   );
 }
 

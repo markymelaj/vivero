@@ -1,3 +1,4 @@
+import AdminShell from "@/components/admin/AdminShell";
 import Link from "next/link";
 import { selectRows } from "@/lib/backoffice/supabase-rest";
 import type { ConsignmentSummary, Partner, Product, Commission } from "@/lib/backoffice/types";
@@ -29,7 +30,8 @@ export default async function AdminDashboard() {
   const pendingCommissions = commissions.reduce((acc, row) => acc + Number(row.amount || 0), 0);
 
   return (
-    <div className="space-y-8">
+    <AdminShell>
+      <div className="space-y-8">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-800">Panel privado</p>
@@ -74,6 +76,7 @@ export default async function AdminDashboard() {
           </table>
         </div>
       </section>
-    </div>
+      </div>
+    </AdminShell>
   );
 }

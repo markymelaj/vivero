@@ -1,3 +1,4 @@
+import AdminShell from "@/components/admin/AdminShell";
 import { createProductAction, adjustProductStockAction } from "@/lib/backoffice/actions";
 import { selectRows } from "@/lib/backoffice/supabase-rest";
 import type { Product } from "@/lib/backoffice/types";
@@ -8,7 +9,8 @@ export const dynamic = "force-dynamic";
 export default async function ProductsPage() {
   const products = await selectRows<Product>("pa_products", { select: "*", order: "category.asc,name.asc" });
   return (
-    <div className="space-y-8">
+    <AdminShell>
+      <div className="space-y-8">
       <div><h1 className="text-4xl font-semibold">Productos y stock</h1><p className="mt-2 text-neutral-600">Precios minoristas, mayoristas, valor a rendir en consignación y stock propio/consignado.</p></div>
       <section className="grid gap-5 lg:grid-cols-2">
         <form action={createProductAction} className="rounded-[1.5rem] border border-emerald-900/10 bg-white p-5 shadow-sm">
@@ -44,6 +46,7 @@ export default async function ProductsPage() {
         <h2 className="text-xl font-semibold">Listado</h2>
         <div className="mt-4 overflow-x-auto"><table className="w-full text-left text-sm"><thead className="text-xs uppercase tracking-wide text-neutral-500"><tr><th className="py-3">SKU</th><th>Producto</th><th>Categoría</th><th>Minorista</th><th>Mayorista</th><th>A rendir</th><th>Propio</th><th>Consignado</th></tr></thead><tbody className="divide-y divide-neutral-100">{products.map((p) => <tr key={p.id}><td className="py-3 font-medium">{p.sku}</td><td>{p.name} · {p.presentation}</td><td>{p.category}</td><td>{money(p.retail_price)}</td><td>{money(p.wholesale_price)}</td><td>{money(p.consignment_render_price)}</td><td>{p.stock_owned}</td><td>{p.stock_consigned}</td></tr>)}</tbody></table></div>
       </section>
-    </div>
+      </div>
+    </AdminShell>
   );
 }

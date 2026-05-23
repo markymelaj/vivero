@@ -1,3 +1,4 @@
+import AdminShell from "@/components/admin/AdminShell";
 import Link from "next/link";
 import { createPartnerAction } from "@/lib/backoffice/actions";
 import { selectRows } from "@/lib/backoffice/supabase-rest";
@@ -15,7 +16,8 @@ export default async function PartnersPage() {
     selectRows<AppUser>("pa_app_users", { select: "id,full_name,email,role,commission_rate,active", active: "eq.true", role: "eq.vendedor" }),
   ]);
   return (
-    <div className="space-y-8">
+    <AdminShell>
+      <div className="space-y-8">
       <div>
         <h1 className="text-4xl font-semibold">Aliados y clientes</h1>
         <p className="mt-2 text-neutral-600">Pet shops, corralones, viveros, arquitectos, vendedores y comercios con acuerdo.</p>
@@ -87,6 +89,7 @@ export default async function PartnersPage() {
           </table>
         </div>
       </section>
-    </div>
+      </div>
+    </AdminShell>
   );
 }
