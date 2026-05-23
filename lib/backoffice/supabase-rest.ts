@@ -70,9 +70,12 @@ export async function rpc<T>(fnName: string, payload: unknown): Promise<T> {
 }
 
 export function eq(value: string) {
-  return `eq.${encodeURIComponent(value)}`;
+  // No encodeamos acá: URLSearchParams se encarga de codificar una sola vez.
+  // Si codificamos dos veces, admin@paesaggio.local queda como admin%2540... y no matchea.
+  return `eq.${value}`;
 }
 
 export function ilike(value: string) {
-  return `ilike.%${encodeURIComponent(value)}%`;
+  // URLSearchParams codifica espacios, acentos y símbolos al construir la query final.
+  return `ilike.%${value}%`;
 }
